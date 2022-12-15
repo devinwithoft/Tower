@@ -1,13 +1,21 @@
 <template>
-  <header>
-    <Navbar />
-  </header>
-  <main>
-    <router-view />
-  </main>
-   <footer class="bg-dark text-light">
-    Made with 💖 by CodeWorks
-  </footer>
+  <div class="container-fluid">
+    <section class="row">
+      <div class="col-10">
+        <h1>TOWAH</h1>
+        <section class="row">
+          <div class="col-12">
+            <router-view />
+          </div>
+        </section>
+      </div>
+      <div class="col-2">
+        <Navbar />
+      </div>
+    </section>
+  </div>
+
+
 </template>
 
 <script>
@@ -27,7 +35,7 @@ export default {
 <style lang="scss">
 @import "./assets/scss/main.scss";
 
-:root{
+:root {
   --main-height: calc(100vh - 32px - 64px);
 }
 

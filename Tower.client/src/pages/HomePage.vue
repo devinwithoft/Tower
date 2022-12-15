@@ -1,22 +1,40 @@
 <template>
-  <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center">
-    <div class="home-card p-5 bg-white rounded elevation-3">
-      <img
-        src="https://bcw.blob.core.windows.net/public/img/8600856373152463"
-        alt="CodeWorks Logo"
-        class="rounded-circle"
-      >
-      <h1 class="my-5 bg-dark text-white p-3 rounded text-center">
-        Vue 3 Starter
-      </h1>
-    </div>
+  <div class="container-fluid">
+    <section class="row">
+      <!-- TODO search buttons -->
+      <div class="col-12">
+        <section class="row">
+          <div class="col-3 mb-2" v-for="e in events">
+            <EventComponent class="rounded" :event="e" />
+          </div>
+        </section>
+      </div>
+    </section>
   </div>
 </template>
 
 <script>
+import { onMounted, computed } from "vue";
+import { eventsService } from "../services/EventsService.js";
+import Pop from "../utils/Pop.js";
+import { AppState } from '../AppState.js';
+
 export default {
   setup() {
-    return {}
+
+    async function getEvents() {
+      try {
+        await eventsService.getAll()
+      } catch (error) {
+        Pop.error(error)
+      }
+    }
+    onMounted(() => {
+      getEvents();
+    });
+    return {
+      events: computed(() => AppState.events)
+    }
   }
 }
 </script>
@@ -41,4 +59,9 @@ export default {
     }
   }
 }
+
+// .eventCard {
+//   height: 20vh;
+//   width: 20vw;
+// }
 </style>
