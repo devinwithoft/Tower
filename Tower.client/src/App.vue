@@ -1,27 +1,30 @@
 <template>
   <div class="container-fluid">
     <section class="row">
-      <div class="col-10">
-        <h1>TOWAH</h1>
+      <div class="col-11">
+        <router-link :to="{ name: 'Home' }">
+          <h1>TOWAH</h1>
+        </router-link>
         <section class="row">
           <div class="col-12">
             <router-view />
           </div>
         </section>
       </div>
-      <div class="col-2">
-        <Navbar />
+      <div class="col-1">
+        <NavComponent class="sticky-top" />
       </div>
     </section>
   </div>
 
-
+  <EventForm />
 </template>
 
 <script>
 import { computed } from 'vue'
 import { AppState } from './AppState'
-import Navbar from './components/Navbar.vue'
+import EventForm from "./components/EventForm.vue"
+import NavComponent from "./components/NavComponent.vue"
 
 export default {
   setup() {
@@ -29,7 +32,7 @@ export default {
       appState: computed(() => AppState)
     }
   },
-  components: { Navbar }
+  components: { NavComponent, EventForm }
 }
 </script>
 <style lang="scss">

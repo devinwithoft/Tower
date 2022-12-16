@@ -15,6 +15,13 @@ class EventsService {
     logger.log(`[Get event by Id]`, res.data)
     AppState.activeEvent = res.data
   }
+
+  async createEvent(body) {
+    const res = await api.post('api/events', body)
+    logger.log('[Created event]', res.data)
+    AppState.events.push(res.data)
+    return res.data
+  }
 }
 
 export const eventsService = new EventsService()

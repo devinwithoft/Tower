@@ -7,7 +7,7 @@ export const EventSchema = new Schema({
   coverImg: { type: String, required: true },
   location: { type: String, required: true },
   capacity: { type: Number, required: true, min: 0 },
-  startDate: { type: String, required: true },
+  startDate: { type: Date, required: true },
   isCanceled: { type: Boolean, default: false },
   creatorId: { type: Schema.Types.ObjectId, required: true, ref: 'Account' },
   type: { type: String, enum: ['concert', 'convention', 'sport', 'digital'], lowercase: true }
