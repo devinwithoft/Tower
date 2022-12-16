@@ -74,4 +74,12 @@ footer {
     filter: drop-shadow(2px 1px 4px #0e0d0d1f);
   }
 }
+
+.light-text-shadow {
+  text-shadow: 1px 1px 1px rgb(58, 58, 58);
+
+  * {
+    filter: drop-shadow(1px 1px 4px #0e0d0d1f);
+  }
+}
 </style>

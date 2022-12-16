@@ -2,14 +2,13 @@
   <div v-if="thisEvent" :style="{ 'background-image': `url(${thisEvent.coverImg})` }">
     <section class="bg-coverImg row align-items-center">
       <div class="col-4 bottom">
-        <!-- TODO vbind alt text -->
         <img :src="thisEvent.coverImg" alt='' class="img-fluid py-2">
         <img v-if="eventCancelled" src="https://cdntest.bridge909.org/images/image-2-600x288.png" alt=""
           class="img-fluid stack">
       </div>
       <div class="col-8 text-light">
         <section class="row">
-          <div class="col-12 d-flex justify-content-between">
+          <div class="col-12 d-flex justify-content-between light-text-shadow">
             <div>
               <h4>{{ thisEvent.name }}</h4>
               <h6>{{ thisEvent.location }}</h6>
@@ -30,14 +29,15 @@
                   <li><a class="dropdown-item" @click="cancelEvent(thisEvent.id)">Cancel Event</a></li>
                 </ul>
               </div>
-              <h6>{{ new Date(thisEvent.startDate).toLocaleDateString() }}</h6>
+              <h6 class="light-text-shadow">{{ new Date(thisEvent.startDate).toLocaleDateString() }}</h6>
             </div>
           </div>
-          <div class="col-12">{{ thisEvent.description }}</div>
-          <div class="col-12 d-flex justify-content-between py-3">
+          <div class="col-12 light-text-shadow">{{ thisEvent.description }}</div>
+          <div class="col-12 d-flex justify-content-between py-3 light-text-shadow">
             <div class="col-4">{{ thisEvent.capacity }} Spots Left</div>
             <button v-if="eventCancelled" class="col-4 btn btn-danger disabled" @click="createTicket()">EVENT
               CANCELLED</button>
+            <button v-else-if="!account.id" class="col-4 btn btn-warning disabled">SIGN IN TO ATTEND</button>
             <button v-else-if="attendingEvent" class="col-4 btn btn-danger"
               @click="removeTicket(attendingEvent.id)">CANCEL
               TICKET</button>
@@ -49,12 +49,13 @@
     </section>
   </div>
   <!-- SECTION ATTENDING LIST -->
-  <section class="row justify-content-center" v-if="tickets.length > 0">
+  <section class="row justify-content-center">
     <div class="col-10 text-ldark mt-2">
-      <p>See who is attending</p>
+      <h6 v-if="tickets.length > 0">See who is attending</h6>
+      <h6 v-else>Be the first to attend this event!</h6>
     </div>
     <div class="col-8 mb-4">
-      <section class="row bg-ldark">
+      <section class="row bg-ldark row-height">
         <div v-for="t in tickets" class="col-1">
           <img :src="t.profile.picture" :title="t.profile.name" class="avatar rounded-circle p-1">
         </div>
@@ -71,7 +72,7 @@
             <button class="btn btn-success">Post Comment</button>
           </form>
           <div v-else>
-            <h5 class="text-center my-2">Please sign in to post comments</h5>
+            <h5 class="text-center my-2 mb-4 text-black">Please sign in to post comments</h5>
           </div>
         </div>
       </section>
@@ -216,5 +217,9 @@ export default {
 .avatar {
   height: 10vh;
   width: 10vh
+}
+
+.row-height {
+  height: 10vh;
 }
 </style>

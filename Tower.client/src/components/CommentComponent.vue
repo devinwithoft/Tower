@@ -4,8 +4,8 @@
       <img :src="comment.creator.picture" alt="User Image" class="rounded rounded-circle avatar">
     </div>
     <div class="col-8">
-      <h5>{{ comment.creator.name }}</h5>
-      {{ comment.body }}
+      <h5 class="text-black">{{ comment.creator.name }}</h5>
+      <p class="text-black">{{ comment.body }}</p>
     </div>
     <div v-if="comment.creator.id == account.id" @click="deleteComment(comment.id)"
       class="col-1 mdi mdi-delete btn btn-outline-danger" title="Delete your comment"></div>
