@@ -12,11 +12,11 @@ export class EventsController extends BaseController {
       .get('', this.getAll)
       .get('/:id', this.getOne)
       .get('/:eventId/comments', this.getEventComments)
+      .get('/:eventId/tickets', this.getEventTickets)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.create)
       .put('/:id', this.editEvent)
       .delete('/:id', this.cancelEvent)
-      .get('/:eventId/tickets', this.getEventTickets)
   }
 
   async getAll(req, res, next) {

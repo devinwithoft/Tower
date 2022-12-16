@@ -1,6 +1,6 @@
 import { dbContext } from "../db/DbContext.js"
 import { BadRequest } from "../utils/Errors.js"
-import { eventService } from "../services/EventService.js"
+import { eventService } from "./EventService.js"
 
 class CommentsService {
   async createComment(body) {

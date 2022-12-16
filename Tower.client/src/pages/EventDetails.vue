@@ -1,9 +1,11 @@
 <template>
   <div v-if="thisEvent" :style="{ 'background-image': `url(${thisEvent.coverImg})` }">
     <section class="bg-coverImg row align-items-center">
-      <div class="col-4">
+      <div class="col-4 bottom">
         <!-- TODO vbind alt text -->
         <img :src="thisEvent.coverImg" alt='' class="img-fluid py-2">
+        <img v-if="!thisEvent.isCancelled" src="https://cdntest.bridge909.org/images/image-2-600x288.png" alt=""
+          class="img-fluid stack">
       </div>
       <div class="col-8 text-light">
         <section class="row">
@@ -20,7 +22,12 @@
           <div class="col-12">{{ thisEvent.description }}</div>
           <div class="col-12 d-flex justify-content-between py-3">
             <div class="col-4">{{ thisEvent.capacity }} Spots Left</div>
-            <button class="col-4 btn btn-warning">ATTEND</button>
+            <button v-if="attendingEvent" class="col-4 btn btn-danger" @click="removeTicket(attendingEvent.id)">CANCEL
+              TICKET</button>
+            <button v-else-if="!attendingEvent && thisEvent.capacity > 0" class="col-4 btn btn-warning"
+              @click="createTicket()">ATTEND</button>
+            <button v-else-if="!attendingEvent && thisEvent.capacity <= 0" class="col-4 btn btn-danger disabled"
+              @click="createTicket()">EVENT IS FULL</button>
           </div>
         </section>
       </div>
@@ -63,7 +70,9 @@ import { computed, reactive, onMounted, ref } from 'vue';
 import { useRoute } from "vue-router";
 import { eventsService } from "../services/EventsService.js";
 import { commentsService } from "../services/CommentsService.js";
+import { ticketsService } from "../services/TicketsService.js";
 import Pop from "../utils/Pop.js";
+import { logger } from "../utils/Logger.js";
 
 
 export default {
@@ -84,9 +93,17 @@ export default {
         Pop.error(error.message)
       }
     }
+    async function getTicketsByEventId() {
+      try {
+        await ticketsService.getTicketsByEventId(route.params.eventId)
+      } catch (error) {
+        Pop.error(error.message)
+      }
+    }
     onMounted(() => {
       getEventById();
-      getCommentsByEventId()
+      getCommentsByEventId();
+      getTicketsByEventId();
     });
     return {
       editable,
@@ -94,12 +111,27 @@ export default {
       coverImg: computed(() => AppState.activeEvent.coverImg),
       comments: computed(() => AppState.comments),
       account: computed(() => AppState.account),
-
+      attendingEvent: computed(() => AppState.tickets.find(t => t.accountId == AppState.account.id)),
       async postComment() {
         try {
           editable.value.eventId = route.params.eventId
           await commentsService.postComment(editable.value)
           editable.value = {}
+        } catch (error) {
+          Pop.error(error.message)
+        }
+      },
+      async createTicket() {
+        try {
+          await ticketsService.createTicket({ eventId: route.params.eventId })
+        } catch (error) {
+          logger.error(error)
+          Pop.error(error.message)
+        }
+      },
+      async removeTicket(ticketId) {
+        try {
+          await ticketsService.removeTicket(ticketId)
         } catch (error) {
           Pop.error(error.message)
         }
@@ -117,5 +149,15 @@ export default {
   backdrop-filter: blur(12px);
   border-radius: 3px;
 
+}
+
+.bottom {
+  position: relative;
+}
+
+.stack {
+  position: absolute;
+  left: 5px;
+  top: 20px
 }
 </style>
