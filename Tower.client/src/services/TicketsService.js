@@ -7,6 +7,7 @@ class TicketsService {
     const res = await api.get(`api/events/${eventId}/tickets`)
     logger.log('Getting tickets by Id', res.data)
     AppState.tickets = res.data
+    console.log(res.data)
   }
 
 
@@ -15,6 +16,7 @@ class TicketsService {
     logger.log('creating ticket', res.data)
     AppState.tickets.push(res.data)
     AppState.activeEvent.capacity -= 1
+    AppState.accountTickets.push(res.data)
   }
 
   async removeTicket(ticketId) {
@@ -22,6 +24,7 @@ class TicketsService {
     logger.log('Removed ticket')
     AppState.tickets = AppState.tickets.filter(t => t.id != ticketId)
     AppState.activeEvent.capacity += 1
+    AppState.accountTickets = AppState.accountTickets.filter(t => t.id != ticketId)
   }
 }
 

@@ -1,20 +1,29 @@
 <template>
   <router-link :to="{ name: 'Event', params: { eventId: event.id } }">
-    <section class="row bg-eventImg align-items-end">
-      <div class="bg-blur text-light">
+    <section class="row align-items-end p-2">
+      <div class="bg-blur text-light text-shadow bg-eventImg d-flex align-items-end rounded">
+        <div class="bg-blur row">
 
-
-        <div class="col-12">
-
-          <h6>
-            {{ event.name }}
-          </h6>
+          <div class="col-12 ">
+            <h6>
+              {{ event.name }}
+            </h6>
+          </div>
+          <div class="col-12 d-flex justify-content-between">
+            <p v-if="event.type == 'concert'">Concert</p>
+            <p v-else-if="event.type == 'convention'">Convention</p>
+            <p v-else-if="event.type == 'sport'">Sports</p>
+            <p v-else-if="event.type == 'digital'">Digital Event</p>
+            <p>{{ new Date(event.startDate).toLocaleDateString() }}</p>
+          </div>
+          <div v-if="event.isCanceled" class="col-12 bg-cancelled text-center">
+            <h5>Event Cancelled</h5>
+          </div>
+          <div v-else-if="event.capacity <= 0" class="col-12 bg-cancelled text-center">
+            <h5>Event Full</h5>
+          </div>
+          <p v-else class="text-end">{{ event.capacity }} tickets left</p>
         </div>
-        <div class="col-10 d-flex justify-content-between">
-          {{ event.type }}
-          {{ event.startDate }}
-        </div>
-        <p class="text-end">{{ event.capacity }} tickets left</p>
       </div>
     </section>
   </router-link>
@@ -48,6 +57,10 @@ export default {
     border: 1px solid #56C7FB;
     backdrop-filter: blur(10px);
     border-radius: 3px;
+  }
+
+  .bg-cancelled {
+    background: rgb(138, 28, 14);
   }
 
   // .no-pb {

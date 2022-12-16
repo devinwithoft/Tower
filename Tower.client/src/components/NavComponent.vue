@@ -11,7 +11,8 @@
           Account
         </h5>
       </router-link>
-      <button class="col-12 my-2 btn btn-success" data-bs-toggle="modal" data-bs-target="#eventModal">New Event</button>
+      <button class="col-12 my-2 btn btn-success" data-bs-toggle="modal" data-bs-target="#CreateEventForm">New
+        Event</button>
       <button @click="logout()" class="col-12 btn btn-outline-success my-2">Logout</button>
     </div>
     <div v-else>
