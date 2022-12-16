@@ -68,7 +68,8 @@
       <section class="row justify-content-center">
         <div class="col-10">
           <form v-if="account.id" @submit.prevent="postComment()">
-            <textarea name="" id="" class="form-control my-2" placeholder="comments" v-model="editable.body"></textarea>
+            <textarea name="" id="" class="form-control my-2" placeholder="Share your thoughts!"
+              v-model="editable.body"></textarea>
             <button class="btn btn-success">Post Comment</button>
           </form>
           <div v-else>
