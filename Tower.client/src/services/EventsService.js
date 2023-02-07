@@ -30,8 +30,7 @@ class EventsService {
 
   async cancelEvent(eventId) {
     await api.delete(`api/events/${eventId}`)
-    AppState.activeEvent.cancelEvent = true
-
+    AppState.activeEvent.isCanceled = true
   }
 }
 

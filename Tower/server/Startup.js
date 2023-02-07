@@ -27,14 +27,13 @@ export class Startup {
   }
 
   static configureCors(app) {
-    const allowedDomains = []
+    const allowedDomains = ["towerfullstack.pages.dev"]
     const corsOptions = {
       origin(origin, callback) {
         if (process.env.NODE_ENV === 'dev') {
           return callback(null, true)
         }
-        const originIsWhitelisted = allowedDomains.indexOf(origin) !== -1
-        callback(null, originIsWhitelisted)
+        callback(null, origin.endsWith("towerfullstack.pages.dev"))
       },
       credentials: true
     }

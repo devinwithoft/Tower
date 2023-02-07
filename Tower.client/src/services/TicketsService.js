@@ -7,7 +7,6 @@ class TicketsService {
     const res = await api.get(`api/events/${eventId}/tickets`)
     logger.log('Getting tickets by Id', res.data)
     AppState.tickets = res.data
-    console.log(res.data)
   }
 
 
