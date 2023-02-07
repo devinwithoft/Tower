@@ -27,20 +27,19 @@ export class Startup {
   }
 
   static configureCors(app) {
-    const allowedDomains = ["towerfullstack.pages.dev"]
+    const allowedDomains = ["https://tower-bu5.pages.dev"]
     const corsOptions = {
       origin(origin, callback) {
-        if (process.env.NODE_ENV === 'dev') {
+        origin = origin || ""
+        if (process.env.NODE_ENV === "dev") {
           return callback(null, true)
         }
-        callback(null, origin.endsWith("towerfullstack.pages.dev"))
+        callback(null, origin.endsWith("https://tower-bu5.pages.dev"))
       },
-      credentials: true
+      credentials: true,
     }
-
     app.use(cors(corsOptions))
   }
-
   static ConfigureRoutes(app) {
     const router = express.Router()
     app.use(AccountValidator)
