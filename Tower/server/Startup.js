@@ -27,14 +27,14 @@ export class Startup {
   }
 
   static configureCors(app) {
-    const allowedDomains = ["https://tower-bu5.pages.dev"]
+    const allowedDomains = ["https://tower-bu5.pages.dev/#"]
     const corsOptions = {
       origin(origin, callback) {
         origin = origin || ""
         if (process.env.NODE_ENV === "dev") {
           return callback(null, true)
         }
-        callback(null, origin.endsWith("https://tower-bu5.pages.dev"))
+        callback(null, origin.endsWith("tower-bu5.pages.dev/#"))
       },
       credentials: true,
     }
